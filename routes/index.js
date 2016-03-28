@@ -3,6 +3,10 @@ var router = express.Router();
 var pg = require('pg');
 var connectionString = process.env.DATABASE_URL || 'postgres://postgres:Mattia302012@127.0.0.1:5432/thinklr';
 
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Thinkler' });
+});
+
 router.get('/api/alpha1/all_users', function(req, res) {
 
     var results = [];
@@ -87,6 +91,7 @@ router.post('/api/alpha1/create_user', function(req, res) {
     pg.connect(connectionString, function(err, client, done) {
         // Handle connection errors
         if(err) {
+			
           done();
           console.log(err);
           return res.status(500).json({ success: false, data: err});
