@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
-var connectionString = process.env.DATABASE_URL || 'postgres://postgres:Mattia302012@127.0.0.1:5432/thinklr';
+pg.defaults.ssl = true;
+var connectionString = process.env.DATABASE_URL;
 
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Thinkler' });
@@ -12,7 +13,7 @@ router.get('/api/alpha1/all_users', function(req, res) {
     var results = [];
 
     // Get a Postgres client from the connection pool
-    pg.connect(connectionString, function(err, client, done) {
+    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
         // Handle connection errors
         if(err) {
           done();
